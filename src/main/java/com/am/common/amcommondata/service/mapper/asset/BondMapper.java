@@ -13,11 +13,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface BondMapper {
     
-    @Mapping(target = "id", ignore = true)
     Bond toEntity(BondModel model);
     
     BondModel toModel(Bond entity);
     
-    @Mapping(target = "id", ignore = true)
     Bond updateEntity(@MappingTarget Bond entity, BondModel model);
 }

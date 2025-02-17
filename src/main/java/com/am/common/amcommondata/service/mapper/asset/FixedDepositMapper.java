@@ -13,11 +13,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface FixedDepositMapper {
     
-    @Mapping(target = "id", ignore = true)
     FixedDeposit toEntity(FixedDepositModel model);
     
     FixedDepositModel toModel(FixedDeposit entity);
     
-    @Mapping(target = "id", ignore = true)
     FixedDeposit updateEntity(@MappingTarget FixedDeposit entity, FixedDepositModel model);
 }

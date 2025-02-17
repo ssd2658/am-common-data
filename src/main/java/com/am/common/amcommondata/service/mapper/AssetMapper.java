@@ -21,23 +21,23 @@ public class AssetMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .assetType(entity.getAssetType())
-                .marketData(marketDataMapper.toModel(entity.getMarketData()))
-                .currentValue(calculateCurrentValue(entity))
+                //.marketData(marketDataMapper.toModel(entity.getMarketData()))
+                //.currentValue(calculateCurrentValue(entity))
                 .investmentValue(calculateInvestmentValue(entity))
                 .profitLoss(calculateProfitLoss(entity))
                 .profitLossPercentage(calculateProfitLossPercentage(entity))
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-                .isActive(entity.getIsActive())
+                .isActive(entity.isActive())
                 .build();
     }
 
-    private Double calculateCurrentValue(Asset asset) {
-        if (asset.getMarketData() == null || asset.getMarketData().getMarketPrice() == null) {
-            return 0.0;
-        }
-        return asset.getMarketData().getMarketPrice();
-    }
+    // private Double calculateCurrentValue(Asset asset) {
+    //     if (asset.getMarketData() == null || asset.getMarketData().getMarketPrice() == null) {
+    //         return 0.0;
+    //     }
+    //     return asset.getMarketData().getMarketPrice();
+    // }
 
     private Double calculateInvestmentValue(Asset asset) {
         // Implementation depends on your business logic
@@ -45,9 +45,10 @@ public class AssetMapper {
     }
 
     private Double calculateProfitLoss(Asset asset) {
-        Double currentValue = calculateCurrentValue(asset);
+        //Double currentValue = calculateCurrentValue(asset);
         Double investmentValue = calculateInvestmentValue(asset);
-        return currentValue - investmentValue;
+        //return currentValue - investmentValue;
+        return 0.0;
     }
 
     private Double calculateProfitLossPercentage(Asset asset) {

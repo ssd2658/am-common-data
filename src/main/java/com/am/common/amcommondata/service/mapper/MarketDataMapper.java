@@ -12,11 +12,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MarketDataMapper {
     
-    @Mapping(target = "id", ignore = true)
     MarketData toEntity(MarketDataModel model);
     
     MarketDataModel toModel(MarketData entity);
     
-    @Mapping(target = "id", ignore = true)
     MarketData updateEntity(@MappingTarget MarketData entity, MarketDataModel model);
 }

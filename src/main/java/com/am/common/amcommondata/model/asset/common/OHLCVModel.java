@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class OHLCVModel {
-    private Long id;
     private Double open;
     private Double high;
     private Double low;

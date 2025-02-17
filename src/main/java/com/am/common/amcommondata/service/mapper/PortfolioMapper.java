@@ -61,9 +61,10 @@ public class PortfolioMapper {
     }
 
     private Double calculateTotalValue(Portfolio portfolio) {
-        return portfolio.getAssets().stream()
-                .mapToDouble(asset -> asset.getMarketData().getMarketPrice())
-                .sum();
+        return 0.0;
+        // return portfolio.getAssets().stream()
+        //         .mapToDouble(asset -> asset.getMarketData().getMarketPrice())
+        //         .sum();
     }
 
     private String determinePortfolioStatus(Portfolio portfolio) {

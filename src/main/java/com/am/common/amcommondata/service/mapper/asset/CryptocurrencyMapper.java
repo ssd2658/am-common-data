@@ -13,11 +13,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CryptocurrencyMapper {
     
-    @Mapping(target = "id", ignore = true)
     Cryptocurrency toEntity(CryptocurrencyModel model);
     
     CryptocurrencyModel toModel(Cryptocurrency entity);
     
-    @Mapping(target = "id", ignore = true)
     Cryptocurrency updateEntity(@MappingTarget Cryptocurrency entity, CryptocurrencyModel model);
-}
+}   

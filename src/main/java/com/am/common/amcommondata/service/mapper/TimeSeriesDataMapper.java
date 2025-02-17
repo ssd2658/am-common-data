@@ -12,11 +12,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface TimeSeriesDataMapper {
     
-    @Mapping(target = "id", ignore = true)
     TimeSeriesData toEntity(TimeSeriesDataModel model);
     
     TimeSeriesDataModel toModel(TimeSeriesData entity);
     
-    @Mapping(target = "id", ignore = true)
     TimeSeriesData updateEntity(@MappingTarget TimeSeriesData entity, TimeSeriesDataModel model);
 }
