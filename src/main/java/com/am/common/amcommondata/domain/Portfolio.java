@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.time.LocalDateTime;
+import java.util.UUID;
+import org.hibernate.annotations.GenericGenerator;
 
 @Data
 @Entity
@@ -16,8 +18,13 @@ import java.time.LocalDateTime;
 @Table(name = "portfolios")
 public class Portfolio {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @Column(nullable = false)
     private String name;

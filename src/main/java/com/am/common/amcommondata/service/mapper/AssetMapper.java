@@ -16,11 +16,12 @@ public class AssetMapper {
         }
 
         return AssetModel.builder()
-                .id(entity.getId())
+                //.id(entity.getId())
                 .symbol(entity.getSymbol())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .assetType(entity.getAssetType())
+                .buyingPlatform(entity.getBuyingPlatform())
                 //.marketData(marketDataMapper.toModel(entity.getMarketData()))
                 //.currentValue(calculateCurrentValue(entity))
                 .investmentValue(calculateInvestmentValue(entity))

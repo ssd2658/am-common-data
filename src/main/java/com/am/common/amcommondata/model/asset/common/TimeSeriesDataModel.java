@@ -4,8 +4,12 @@ import lombok.Data;
 import lombok.Builder;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Data
 @Builder
+@JsonInclude(Include.NON_NULL)
 public class TimeSeriesDataModel {
     private Long id;
     private LocalDateTime timestamp;

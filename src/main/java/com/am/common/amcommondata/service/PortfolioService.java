@@ -17,11 +17,11 @@ public class PortfolioService {
     private final PortfolioRepository portfolioRepository;
     private final PortfolioMapper portfolioMapper;
 
-    public PortfolioModel getPortfolio(Long id) {
-        return portfolioRepository.findByIdWithAssets(id)
-                .map(portfolioMapper::toModel)
-                .orElseThrow(() -> new RuntimeException("Portfolio not found: " + id));
-    }
+    // public PortfolioModel getPortfolio(Long id) {
+    //     return portfolioRepository.findByIdWithAssets(id)
+    //             .map(portfolioMapper::toModel)
+    //             .orElseThrow(() -> new RuntimeException("Portfolio not found: " + id));
+    // }
 
     public List<PortfolioModel> getAllPortfolios() {
         return portfolioRepository.findAll().stream()

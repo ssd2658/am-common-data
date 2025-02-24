@@ -17,7 +17,7 @@ public class PortfolioMapper {
         }
 
         return PortfolioModel.builder()
-                .id(entity.getId())
+                //.id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .assets(entity.getAssets().stream()

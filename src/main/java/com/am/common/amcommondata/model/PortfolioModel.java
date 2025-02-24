@@ -7,9 +7,12 @@ import java.util.Set;
 import java.util.HashSet;
 
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Data
 @Builder
+@JsonInclude(Include.NON_NULL)
 public class PortfolioModel {
     private Long id;
     private String name;

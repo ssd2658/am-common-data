@@ -1,6 +1,9 @@
 package com.am.common.amcommondata.model.asset.cryptocurrency;
 
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -8,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@JsonInclude(Include.NON_NULL)
 public class CryptocurrencyModel extends AssetModel {
     private String blockchain;
     private String tokenType; // Native, ERC20, BEP20, etc.

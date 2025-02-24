@@ -6,11 +6,14 @@ import java.util.List;
 
 import com.am.common.amcommondata.domain.asset.common.OHLCV;
 import com.am.common.amcommondata.domain.asset.common.TimeSeriesData;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import java.util.ArrayList;
 
 @Data
 @Builder
+@JsonInclude(Include.NON_NULL)
 public class MarketDataModel {
     private OHLCV latestOHLCV;
     private Double marketPrice;
