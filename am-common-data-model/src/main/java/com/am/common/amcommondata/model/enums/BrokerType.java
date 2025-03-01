@@ -25,4 +25,24 @@ public enum BrokerType {
     public String getCode() {
         return brokerName;
     }
+
+    public boolean isDhan() {
+        return "Dhan".equals(brokerName);
+    }
+
+    public boolean isZerodha() {
+        return "Zerodha".equals(brokerName);
+    }
+
+    public boolean isMStock() {
+        return "MStock".equals(brokerName);
+    }
+
+    public boolean isGrow() {
+        return "Grow".equals(brokerName);
+    }
+
+    public boolean isKotak() {
+        return "Kotak".equals(brokerName);
+    }
 }

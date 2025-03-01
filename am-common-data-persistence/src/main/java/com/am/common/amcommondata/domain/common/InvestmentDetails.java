@@ -1,4 +1,4 @@
-package com.am.common.amcommondata.domain.asset.common;
+package com.am.common.amcommondata.domain.common;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

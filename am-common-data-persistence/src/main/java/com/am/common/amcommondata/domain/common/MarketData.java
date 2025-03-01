@@ -1,4 +1,4 @@
-package com.am.common.amcommondata.domain.asset.common;
+package com.am.common.amcommondata.domain.common;
 
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;

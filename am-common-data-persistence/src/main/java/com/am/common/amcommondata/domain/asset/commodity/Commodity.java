@@ -1,13 +1,16 @@
 package com.am.common.amcommondata.domain.asset.commodity;
 
 import com.am.common.amcommondata.domain.asset.Asset;
-import com.am.common.amcommondata.domain.asset.common.*;
+import com.am.common.amcommondata.domain.common.*;
+import com.am.common.amcommondata.domain.common.InvestmentDetails;
+import com.am.common.amcommondata.domain.common.TaxInfo;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Embedded;``
 import jakarta.validation.constraints.NotBlank;
 
 @Data

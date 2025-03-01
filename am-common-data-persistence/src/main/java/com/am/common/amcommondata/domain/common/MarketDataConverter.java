@@ -1,6 +1,6 @@
-package com.am.common.amcommondata.domain.asset.common;
+package com.am.common.amcommondata.domain.common;
 
-import com.am.common.amcommondata.model.asset.common.MarketData;
+import com.am.common.amcommondata.domain.enums.TimeFrame;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

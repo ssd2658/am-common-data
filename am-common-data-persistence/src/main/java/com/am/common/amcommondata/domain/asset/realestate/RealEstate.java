@@ -1,7 +1,10 @@
 package com.am.common.amcommondata.domain.asset.realestate;
 
 import com.am.common.amcommondata.domain.asset.Asset;
-import com.am.common.amcommondata.domain.asset.common.*;
+import com.am.common.amcommondata.domain.common.InvestmentDetails;
+import com.am.common.amcommondata.domain.common.LocationInfo;
+import com.am.common.amcommondata.domain.common.TaxInfo;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

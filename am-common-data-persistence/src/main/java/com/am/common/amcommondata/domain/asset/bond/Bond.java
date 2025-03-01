@@ -1,13 +1,11 @@
 package com.am.common.amcommondata.domain.asset.bond;
 
 import com.am.common.amcommondata.domain.asset.Asset;
-import com.am.common.amcommondata.model.asset.bond.BondInfo;
-import com.am.common.amcommondata.model.asset.common.InvestmentDetails;
-import com.am.common.amcommondata.model.asset.common.MarketData;
-import com.am.common.amcommondata.model.asset.common.TaxInfo;
-import com.am.common.amcommondata.domain.asset.common.InvestmentDetailsConverter;
-import com.am.common.amcommondata.domain.asset.common.MarketDataConverter;
-import com.am.common.amcommondata.domain.asset.common.TaxInfoConverter;
+import com.am.common.amcommondata.domain.common.BondInfo;
+import com.am.common.amcommondata.domain.common.InvestmentDetails;
+import com.am.common.amcommondata.domain.common.MarketData;
+import com.am.common.amcommondata.domain.common.*;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

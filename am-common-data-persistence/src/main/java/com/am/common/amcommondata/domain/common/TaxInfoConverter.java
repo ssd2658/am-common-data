@@ -1,6 +1,5 @@
-package com.am.common.amcommondata.domain.asset.common;
+package com.am.common.amcommondata.domain.common;
 
-import com.am.common.amcommondata.model.asset.common.TaxInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

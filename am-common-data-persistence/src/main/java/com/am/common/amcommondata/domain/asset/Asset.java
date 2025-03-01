@@ -1,7 +1,7 @@
 package com.am.common.amcommondata.domain.asset;
 
+import com.am.common.amcommondata.domain.enums.AssetType;
 import com.am.common.amcommondata.domain.portfolio.Portfolio;
-import com.am.common.amcommondata.model.enums.AssetType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

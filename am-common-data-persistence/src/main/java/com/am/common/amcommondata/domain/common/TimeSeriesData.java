@@ -1,6 +1,6 @@
-package com.am.common.amcommondata.domain.asset.common;
+package com.am.common.amcommondata.domain.common;
 
-import com.am.common.amcommondata.model.enums.TimeFrame;
+import com.am.common.amcommondata.domain.enums.TimeFrame;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
