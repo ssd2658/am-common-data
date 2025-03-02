@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface BondRepository extends JpaRepository<Bond, UUID> {
+public interface BondRepository extends JpaRepository<Bond, Long> {
     List<Bond> findByBondInfoBondType(String bondType);
     
     List<Bond> findByBondInfoIssuer(String issuer);
