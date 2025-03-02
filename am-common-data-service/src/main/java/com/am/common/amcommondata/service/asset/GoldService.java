@@ -44,7 +44,7 @@ public class GoldService {
     }
 
     @Transactional
-    public GoldModel updateGold(Long id, GoldModel model) {
+    public GoldModel updateGold(UUID id, GoldModel model) {
         Gold existingGold = goldRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gold not found: " + id));
         Gold updatedGold = goldMapper.updateEntity(existingGold, model);
@@ -53,7 +53,7 @@ public class GoldService {
     }
 
     @Transactional
-    public void deleteGold(Long id) {
+    public void deleteGold(UUID id) {
         goldRepository.deleteById(id);
     }
 }

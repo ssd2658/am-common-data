@@ -1,8 +1,6 @@
 package com.am.common.amcommondata.domain.common;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.FetchType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,17 +8,26 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
+@Table(name = "market_data")
 public class MarketData {
-    @ElementCollection(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "market_data_id")
     private List<TimeSeriesData> timeSeriesData = new ArrayList<>();
     
+    @Embedded
     private OHLCV latestOHLCV;
+    
     private Double marketPrice;
     private Double dayHigh;
     private Double dayLow;

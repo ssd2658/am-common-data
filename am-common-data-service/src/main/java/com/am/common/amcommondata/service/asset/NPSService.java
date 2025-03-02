@@ -50,7 +50,7 @@ public class NPSService {
     }
 
     @Transactional
-    public NPSModel updateNPS(Long id, NPSModel model) {
+    public NPSModel updateNPS(UUID id, NPSModel model) {
         NPS existingNPS = pensionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("NPS not found: " + id));
         NPS updatedNPS = npsMapper.updateEntity(existingNPS, model);
@@ -59,7 +59,7 @@ public class NPSService {
     }
 
     @Transactional
-    public void deleteNPS(Long id) {
+    public void deleteNPS(UUID id) {
         pensionRepository.deleteById(id);
     }
 }

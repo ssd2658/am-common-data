@@ -44,7 +44,7 @@ public class CryptocurrencyService {
     }
 
     @Transactional
-    public CryptocurrencyModel updateCryptocurrency(Long id, CryptocurrencyModel model) {
+    public CryptocurrencyModel updateCryptocurrency(UUID id, CryptocurrencyModel model) {
         Cryptocurrency existingCrypto = cryptocurrencyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cryptocurrency not found: " + id));
         Cryptocurrency updatedCrypto = cryptocurrencyMapper.updateEntity(existingCrypto, model);
@@ -53,7 +53,7 @@ public class CryptocurrencyService {
     }
 
     @Transactional
-    public void deleteCryptocurrency(Long id) {
+    public void deleteCryptocurrency(UUID id) {
         cryptocurrencyRepository.deleteById(id);
     }
 }

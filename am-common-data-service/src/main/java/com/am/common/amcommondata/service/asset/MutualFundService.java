@@ -44,7 +44,7 @@ public class MutualFundService {
     }
 
     @Transactional
-    public MutualFundModel updateMutualFund(Long id, MutualFundModel model) {
+    public MutualFundModel updateMutualFund(UUID id, MutualFundModel model) {
         MutualFund existingFund = mutualFundRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mutual Fund not found: " + id));
         MutualFund updatedFund = mutualFundMapper.updateEntity(existingFund, model);
@@ -53,7 +53,7 @@ public class MutualFundService {
     }
 
     @Transactional
-    public void deleteMutualFund(Long id) {
+    public void deleteMutualFund(UUID id) {
         mutualFundRepository.deleteById(id);
     }
 }

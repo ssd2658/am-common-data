@@ -44,7 +44,7 @@ public class FixedDepositService {
     }
 
     @Transactional
-    public FixedDepositModel updateFixedDeposit(Long id, FixedDepositModel model) {
+    public FixedDepositModel updateFixedDeposit(UUID id, FixedDepositModel model) {
         FixedDeposit existingFD = fixedDepositRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fixed Deposit not found: " + id));
         FixedDeposit updatedFD = fixedDepositMapper.updateEntity(existingFD, model);
@@ -53,7 +53,7 @@ public class FixedDepositService {
     }
 
     @Transactional
-    public void deleteFixedDeposit(Long id) {
+    public void deleteFixedDeposit(UUID id) {
         fixedDepositRepository.deleteById(id);
     }
 }

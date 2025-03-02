@@ -49,7 +49,7 @@ public class RealEstateService {
     }
 
     @Transactional
-    public RealEstateModel updateRealEstate(Long id, RealEstateModel realEstateModel) {
+    public RealEstateModel updateRealEstate(UUID id, RealEstateModel realEstateModel) {
         var existingRealEstate = realEstateRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Real Estate not found: " + id));
         var updatedRealEstate = realEstateMapper.updateEntity(existingRealEstate, realEstateModel);
@@ -58,7 +58,7 @@ public class RealEstateService {
     }
 
     @Transactional
-    public void deleteRealEstate(Long id) {
+    public void deleteRealEstate(UUID id) {
         realEstateRepository.deleteById(id);
     }
 }

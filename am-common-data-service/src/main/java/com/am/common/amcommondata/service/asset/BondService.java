@@ -44,7 +44,7 @@ public class BondService {
     }
 
     @Transactional
-    public BondModel updateBond(Long id, BondModel model) {
+    public BondModel updateBond(UUID id, BondModel model) {
         Bond existingBond = bondRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Bond not found: " + id));
         Bond updatedBond = bondMapper.updateEntity(existingBond, model);
@@ -53,7 +53,7 @@ public class BondService {
     }
 
     @Transactional
-    public void deleteBond(Long id) {
+    public void deleteBond(UUID id) {
         bondRepository.deleteById(id);
     }
 }

@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @Entity
@@ -16,8 +17,8 @@ import java.util.Set;
 @Table(name = "market_indices")
 public class MarketIndex {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String code; // NIFTY50, BANKNIFTY, etc.
@@ -42,7 +43,8 @@ public class MarketIndex {
     @Column(name = "index_type")
     private IndexType indexType;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "market_data_id")
     private MarketData marketData;
 
     @OneToMany(mappedBy = "index", cascade = CascadeType.ALL)
