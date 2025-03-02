@@ -21,7 +21,7 @@ public class AssetMapper {
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .assetType(entity.getAssetType())
-                .buyingPlatform(entity.getBuyingPlatform())
+                .brokerType(entity.getBrokerType())
                 //.marketData(marketDataMapper.toModel(entity.getMarketData()))
                 //.currentValue(calculateCurrentValue(entity))
                 .investmentValue(calculateInvestmentValue(entity))

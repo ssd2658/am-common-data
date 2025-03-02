@@ -18,3 +18,4 @@ public interface MarketDataMapper {
     
     MarketData updateEntity(@MappingTarget MarketData entity, MarketDataModel model);
 }
+

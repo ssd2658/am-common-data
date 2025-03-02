@@ -1,6 +1,7 @@
 package com.am.common.amcommondata.model.asset;
 
 import com.am.common.amcommondata.model.enums.AssetType;
+import com.am.common.amcommondata.model.enums.BrokerType;
 import com.am.common.amcommondata.model.asset.common.MarketDataModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -25,7 +26,7 @@ public class AssetModel {
     private Double avgBuyingPrice;
     private Double currentValue;
     private Double investmentValue;
-    private String buyingPlatform;
+    private BrokerType brokerType;
     private Double profitLoss;
     private Double profitLossPercentage;
     private LocalDateTime createdAt;
