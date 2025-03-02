@@ -1,6 +1,6 @@
 package com.am.common.amcommondata.domain.exchange;
 
-import com.am.common.amcommondata.domain.asset.common.MarketData;
+import com.am.common.amcommondata.domain.common.MarketData;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

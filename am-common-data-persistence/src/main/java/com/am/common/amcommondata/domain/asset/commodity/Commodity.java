@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Embedded;``
+import jakarta.persistence.Embedded;
 import jakarta.validation.constraints.NotBlank;
 
 @Data
