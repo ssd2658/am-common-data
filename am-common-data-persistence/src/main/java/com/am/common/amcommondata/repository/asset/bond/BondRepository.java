@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface BondRepository extends JpaRepository<Bond, Long> {
+public interface BondRepository extends JpaRepository<Bond, UUID> {
     List<Bond> findByBondInfoBondType(String bondType);
     
     List<Bond> findByBondInfoIssuer(String issuer);
