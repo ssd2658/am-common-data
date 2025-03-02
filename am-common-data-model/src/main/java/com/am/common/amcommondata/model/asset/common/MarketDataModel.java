@@ -1,7 +1,5 @@
 package com.am.common.amcommondata.model.asset.common;
 
-import com.am.common.amcommondata.model.asset.common.OHLCV;
-import com.am.common.amcommondata.model.asset.common.TimeSeriesData;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.Builder;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MarketDataModel {
-    private OHLCV latestOHLCV;
+    private OHLCVModel latestOHLCV;
     private Double marketPrice;
     private Double dayHigh;
     private Double dayLow;
@@ -41,5 +39,5 @@ public class MarketDataModel {
     private Double spreadPercentage;
 
     @Builder.Default
-    private List<TimeSeriesData> timeSeriesData = new ArrayList<>();
+    private List<TimeSeriesDataModel> timeSeriesData = new ArrayList<>();
 }

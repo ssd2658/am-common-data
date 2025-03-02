@@ -1,13 +1,13 @@
-package com.am.common.amcommondata.domain.enums;
+// package com.am.common.amcommondata.domain.enums;
 
-public enum AssetType {
-    EQUITY,
-    FIXED_INCOME,
-    MUTUAL_FUND,
-    ETF,
-    COMMODITY,
-    NPS,
-    REAL_ESTATE,
-    CASH,
-    CRYPTOCURRENCY
-}
+// public enum AssetType {
+//     EQUITY,
+//     FIXED_INCOME,
+//     MUTUAL_FUND,
+//     ETF,
+//     COMMODITY,
+//     NPS,
+//     REAL_ESTATE,
+//     CASH,
+//     CRYPTOCURRENCY
+// }

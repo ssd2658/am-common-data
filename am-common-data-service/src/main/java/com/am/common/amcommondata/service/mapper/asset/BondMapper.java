@@ -12,7 +12,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         uses = {MarketDataMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface BondMapper {
-    
+
     Bond toEntity(BondModel model);
     
     BondModel toModel(Bond entity);

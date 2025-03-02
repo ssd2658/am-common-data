@@ -15,6 +15,13 @@ public class TimeSeriesDataModel {
     private LocalDateTime timestamp;
     private String timeframe;
     private OHLCVModel ohlcv;
+    private OHLCVModel latestFiveMin;
+    private OHLCVModel latestFifteenMin;
+    private OHLCVModel latestHourly;
+    private OHLCVModel latestDaily;
+    private OHLCVModel latestWeekly;
+    private OHLCVModel latestMonthly;
+    private OHLCVModel latestYearly;
     private Double volume;
     private Double openInterest;
     private Double volatility;

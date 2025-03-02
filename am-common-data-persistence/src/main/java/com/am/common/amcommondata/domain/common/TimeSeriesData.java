@@ -1,6 +1,5 @@
 package com.am.common.amcommondata.domain.common;
 
-import com.am.common.amcommondata.domain.enums.TimeFrame;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.FetchType;
@@ -11,9 +10,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+
+import com.am.common.amcommondata.model.enums.TimeFrame;
+
 import java.util.List;
 import java.util.HashMap;
-import java.util.ArrayList;
 
 @Data
 @Builder

@@ -16,10 +16,10 @@ public class EquityService {
     private final EquityRepository equityRepository;
     private final EquityMapper equityMapper;
 
-    public EquityModel getEquity(Long id) {
-        return equityRepository.findById(id)
+    public EquityModel getEquity(String symbol) {
+        return equityRepository.findEquityBySymbol(symbol)
                 .map(equityMapper::toModel)
-                .orElseThrow(() -> new RuntimeException("Equity not found: " + id));
+                .orElseThrow(() -> new RuntimeException("Equity not found: " + symbol));
     }
 
     public List<EquityModel> getAllEquities() {
@@ -48,16 +48,12 @@ public class EquityService {
     }
 
     @Transactional
-    public EquityModel updateEquity(Long id, EquityModel equityModel) {
-        var existingEquity = equityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Equity not found: " + id));
+    public EquityModel updateEquity(String symbol, EquityModel equityModel) {
+        var existingEquity = equityRepository.findEquityBySymbol(symbol)
+                .orElseThrow(() -> new RuntimeException("Equity not found: " + symbol));
         var updatedEquity = equityMapper.updateEntity(existingEquity, equityModel);
         updatedEquity = equityRepository.save(updatedEquity);
         return equityMapper.toModel(updatedEquity);
     }
 
-    @Transactional
-    public void deleteEquity(Long id) {
-        equityRepository.deleteById(id);
-    }
 }

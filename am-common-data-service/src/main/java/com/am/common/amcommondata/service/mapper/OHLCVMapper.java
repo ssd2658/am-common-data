@@ -1,6 +1,6 @@
 package com.am.common.amcommondata.service.mapper;
 
-import com.am.common.amcommondata.domain.asset.common.OHLCV;
+import com.am.common.amcommondata.domain.common.OHLCV;
 import com.am.common.amcommondata.model.asset.common.OHLCVModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

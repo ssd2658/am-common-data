@@ -1,7 +1,8 @@
 package com.am.common.amcommondata.repository.asset;
 
 import com.am.common.amcommondata.domain.asset.Asset;
-import com.am.common.amcommondata.domain.enums.AssetType;
+import com.am.common.amcommondata.model.enums.AssetType;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

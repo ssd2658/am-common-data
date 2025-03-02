@@ -28,8 +28,8 @@ public class AssetMapper {
                 .profitLoss(calculateProfitLoss(entity))
                 .profitLossPercentage(calculateProfitLossPercentage(entity))
                 .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
-                .isActive(entity.isActive())
+                .updatedAt(entity.getModifiedAt())
+                //.isActive(entity.isActive())
                 .build();
     }
 
