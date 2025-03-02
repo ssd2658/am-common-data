@@ -8,6 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface PortfolioRepository extends JpaRepository<Portfolio, UUID> {
-    List<Portfolio> findByCreatedBy(String userId);
-    List<Portfolio> findByNameContainingIgnoreCase(String query);
+    List<Portfolio> findByOwner(String owner);
+    
 }

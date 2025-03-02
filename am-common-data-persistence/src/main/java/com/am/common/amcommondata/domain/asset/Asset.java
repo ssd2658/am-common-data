@@ -18,7 +18,7 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "assets")
-public abstract class Asset {
+public class Asset {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -54,6 +54,7 @@ public abstract class Asset {
     @Enumerated(EnumType.STRING)
     @Column(name = "broker_type", nullable = false)
     private BrokerType brokerType;
+
     private String exchange;
     private String sector;
     private String industry;
@@ -63,7 +64,6 @@ public abstract class Asset {
     private String notes;
     private String status;
     private LocalDateTime purchaseDate;
-    private LocalDateTime lastUpdated;
     private LocalDateTime maturityDate;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;

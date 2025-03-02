@@ -1,6 +1,8 @@
 package com.am.common.amcommondata.domain.portfolio;
 
 import com.am.common.amcommondata.domain.asset.Asset;
+import com.am.common.amcommondata.model.enums.FundType;
+
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,12 +35,15 @@ public class Portfolio {
     private String description;
     private String owner;
     private String currency;
-    private String type;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "fund_type", nullable = false)
+    private FundType fundType;
     private String status;
     private String tags;
     private String notes;
 
-    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Asset> assets = new HashSet<>();
 
     private LocalDateTime createdAt;
