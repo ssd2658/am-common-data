@@ -2,7 +2,7 @@ name: Build and Publish Maven Package
 
 on:
   push:
-    branches: [ main, */** ]
+    branches: [ main, develop, feature/** ]
   release:
     types: [created]
   workflow_dispatch:
