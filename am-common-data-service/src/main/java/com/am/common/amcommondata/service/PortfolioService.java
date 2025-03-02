@@ -2,7 +2,7 @@ package com.am.common.amcommondata.service;
 
 import com.am.common.amcommondata.domain.portfolio.Portfolio;
 import com.am.common.amcommondata.model.PortfolioModel;
-import com.am.common.amcommondata.repository.PortfolioRepository;
+import com.am.common.amcommondata.repository.portfolio.PortfolioRepository;
 import com.am.common.amcommondata.service.mapper.PortfolioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

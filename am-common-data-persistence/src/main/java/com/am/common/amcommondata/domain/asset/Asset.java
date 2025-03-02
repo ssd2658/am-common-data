@@ -2,6 +2,7 @@ package com.am.common.amcommondata.domain.asset;
 
 import com.am.common.amcommondata.domain.portfolio.Portfolio;
 import com.am.common.amcommondata.model.enums.AssetType;
+import com.am.common.amcommondata.model.enums.BrokerType;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -49,8 +50,10 @@ public abstract class Asset {
     private Double avgBuyingPrice;
     private Double currentValue;
     private Double investmentValue;
-    private String buyingPlatform;
-    private String broker;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "broker_type", nullable = false)
+    private BrokerType brokerType;
     private String exchange;
     private String sector;
     private String industry;

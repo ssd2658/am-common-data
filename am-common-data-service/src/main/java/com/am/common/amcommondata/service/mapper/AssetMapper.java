@@ -1,63 +1,63 @@
 package com.am.common.amcommondata.service.mapper;
 
 import com.am.common.amcommondata.domain.asset.Asset;
+import com.am.common.amcommondata.domain.asset.equity.Equity;
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.am.common.amcommondata.model.enums.AssetType;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.springframework.stereotype.Component;
-import lombok.RequiredArgsConstructor;
 
+@Mapper(componentModel = "spring", uses = {MarketDataMapper.class})
 @Component
-@RequiredArgsConstructor
-public class AssetMapper {
-    private final MarketDataMapper marketDataMapper;
+public interface AssetMapper {
+    @Mapping(target = "marketData", ignore = true)
+    @Mapping(target = "currentValue", ignore = true)
+    @Mapping(target = "profitLoss", ignore = true)
+    @Mapping(target = "profitLossPercentage", ignore = true)
+    AssetModel toModel(Asset entity);
 
-    public AssetModel toModel(Asset entity) {
-        if (entity == null) {
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "modifiedAt", ignore = true)
+    default Asset toEntity(AssetModel model) {
+        if (model == null) {
             return null;
         }
 
-        return AssetModel.builder()
-                //.id(entity.getId())
-                .symbol(entity.getSymbol())
-                .name(entity.getName())
-                .description(entity.getDescription())
-                .assetType(entity.getAssetType())
-                .brokerType(entity.getBrokerType())
-                //.marketData(marketDataMapper.toModel(entity.getMarketData()))
-                //.currentValue(calculateCurrentValue(entity))
-                .investmentValue(calculateInvestmentValue(entity))
-                .profitLoss(calculateProfitLoss(entity))
-                .profitLossPercentage(calculateProfitLossPercentage(entity))
-                .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getModifiedAt())
-                //.isActive(entity.isActive())
-                .build();
-    }
-
-    // private Double calculateCurrentValue(Asset asset) {
-    //     if (asset.getMarketData() == null || asset.getMarketData().getMarketPrice() == null) {
-    //         return 0.0;
-    //     }
-    //     return asset.getMarketData().getMarketPrice();
-    // }
-
-    private Double calculateInvestmentValue(Asset asset) {
-        // Implementation depends on your business logic
-        return 0.0;
-    }
-
-    private Double calculateProfitLoss(Asset asset) {
-        //Double currentValue = calculateCurrentValue(asset);
-        Double investmentValue = calculateInvestmentValue(asset);
-        //return currentValue - investmentValue;
-        return 0.0;
-    }
-
-    private Double calculateProfitLossPercentage(Asset asset) {
-        Double profitLoss = calculateProfitLoss(asset);
-        Double investmentValue = calculateInvestmentValue(asset);
-        if (investmentValue == 0) {
-            return 0.0;
+        Asset asset;
+        if (model.getAssetType() == AssetType.EQUITY) {
+            asset = new Equity();
+        } else {
+            throw new UnsupportedOperationException("Asset type not supported: " + model.getAssetType());
         }
-        return (profitLoss / investmentValue) * 100;
+
+        asset.setSymbol(model.getSymbol());
+        asset.setName(model.getName());
+        asset.setDescription(model.getDescription());
+        asset.setAssetType(model.getAssetType());
+        asset.setBrokerType(model.getBrokerType());
+        asset.setInvestmentValue(model.getInvestmentValue());
+
+        return asset;
+    }
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "modifiedAt", ignore = true)
+    default Asset updateEntity(@MappingTarget Asset entity, AssetModel model) {
+        if (model == null) {
+            return entity;
+        }
+
+        entity.setSymbol(model.getSymbol());
+        entity.setName(model.getName());
+        entity.setDescription(model.getDescription());
+        entity.setAssetType(model.getAssetType());
+        entity.setBrokerType(model.getBrokerType());
+        entity.setInvestmentValue(model.getInvestmentValue());
+
+        return entity;
     }
 }

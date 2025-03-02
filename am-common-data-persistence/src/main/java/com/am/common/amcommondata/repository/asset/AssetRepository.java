@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface AssetRepository extends JpaRepository<Asset, Long> {
+public interface AssetRepository extends JpaRepository<Asset, UUID> {
     List<Asset> findByAssetType(AssetType assetType);
     
-    List<Asset> findByPortfolioId(Long portfolioId);
+    List<Asset> findByPortfolioId(UUID portfolioId);
     
     @Query("SELECT a FROM Asset a WHERE a.marketData.marketCap >= :minMarketCap")
     List<Asset> findByMinimumMarketCap(Double minMarketCap);
