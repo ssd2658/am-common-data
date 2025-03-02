@@ -4,7 +4,7 @@ public enum BrokerType {
     DHAN("Dhan"),
     ZERODHA("Zerodha"),
     MSTOCK("MStock"),
-    GROW("Grow"),
+    GROWW("Groww"),
     KOTAK("Kotak");
     
     private String brokerName;
