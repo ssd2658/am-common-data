@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface BondRepository extends JpaRepository<Bond, Long> {
+public interface BondRepository extends JpaRepository<Bond, UUID> {
     List<Bond> findByBondInfoBondType(String bondType);
     
     List<Bond> findByBondInfoIssuer(String issuer);
     
-    @Query("SELECT b FROM Bond b WHERE b.bondInfo.maturityDate <= :maturityDate")
-    List<Bond> findByMaxMaturityDate(LocalDateTime maturityDate);
+    List<Bond> findByMaturityDateBefore(LocalDateTime date);
+    List<Bond> findByMaturityDateAfter(LocalDateTime date);
     
     @Query("SELECT b FROM Bond b WHERE b.bondInfo.couponRate >= :minRate")
     List<Bond> findByMinimumCouponRate(Double minRate);

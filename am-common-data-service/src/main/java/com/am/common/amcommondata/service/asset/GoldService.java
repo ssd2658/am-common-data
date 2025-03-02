@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +18,7 @@ public class GoldService {
     private final GoldRepository goldRepository;
     private final GoldMapper goldMapper;
 
-    public GoldModel getGold(Long id) {
+    public GoldModel getGold(UUID id) {
         return goldRepository.findById(id)
                 .map(goldMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("Gold not found: " + id));

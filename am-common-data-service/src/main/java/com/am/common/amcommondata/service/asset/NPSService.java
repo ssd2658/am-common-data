@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +18,7 @@ public class NPSService {
     private final PensionRepository pensionRepository;
     private final NPSMapper npsMapper;
 
-    public NPSModel getNPS(Long id) {
+    public NPSModel getNPS(UUID id) {
         return pensionRepository.findById(id)
                 .map(npsMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("NPS not found: " + id));

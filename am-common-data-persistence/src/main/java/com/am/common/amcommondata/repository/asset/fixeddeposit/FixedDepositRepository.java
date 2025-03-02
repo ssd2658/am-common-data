@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface FixedDepositRepository extends JpaRepository<FixedDeposit, Long> {
+public interface FixedDepositRepository extends JpaRepository<FixedDeposit, UUID> {
     List<FixedDeposit> findByBankName(String bankName);
     
     @Query("SELECT fd FROM FixedDeposit fd WHERE fd.depositInfo.interestRate >= :minRate")

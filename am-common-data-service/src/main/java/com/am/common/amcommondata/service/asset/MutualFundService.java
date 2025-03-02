@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +18,7 @@ public class MutualFundService {
     private final MutualFundRepository mutualFundRepository;
     private final MutualFundMapper mutualFundMapper;
 
-    public MutualFundModel getMutualFund(Long id) {
+    public MutualFundModel getMutualFund(UUID id) {
         return mutualFundRepository.findById(id)
                 .map(mutualFundMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("Mutual Fund not found: " + id));

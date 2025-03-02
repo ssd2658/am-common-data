@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +18,7 @@ public class CryptocurrencyService {
     private final CryptocurrencyRepository cryptocurrencyRepository;
     private final CryptocurrencyMapper cryptocurrencyMapper;
 
-    public CryptocurrencyModel getCryptocurrency(Long id) {
+    public CryptocurrencyModel getCryptocurrency(UUID id) {
         return cryptocurrencyRepository.findById(id)
                 .map(cryptocurrencyMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("Cryptocurrency not found: " + id));

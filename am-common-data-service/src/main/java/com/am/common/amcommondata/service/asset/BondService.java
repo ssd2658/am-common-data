@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,7 +18,7 @@ public class BondService {
     private final BondRepository bondRepository;
     private final BondMapper bondMapper;
 
-    public BondModel getBond(Long id) {
+    public BondModel getBond(UUID id) {
         return bondRepository.findById(id)
                 .map(bondMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("Bond not found: " + id));

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,7 +17,7 @@ public class RealEstateService {
     private final RealEstateRepository realEstateRepository;
     private final RealEstateMapper realEstateMapper;
 
-    public RealEstateModel getRealEstate(Long id) {
+    public RealEstateModel getRealEstate(UUID id) {
         return realEstateRepository.findById(id)
                 .map(realEstateMapper::toModel)
                 .orElseThrow(() -> new RuntimeException("Real Estate not found: " + id));

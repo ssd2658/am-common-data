@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Repository
-public interface PensionRepository extends JpaRepository<NPS, Long> {
+public interface PensionRepository extends JpaRepository<NPS, UUID> {
     List<NPS> findBySchemeType(String schemeType);
     List<NPS> findByFundManager(String fundManager);
     List<NPS> findByMaturityDateBefore(LocalDate date);

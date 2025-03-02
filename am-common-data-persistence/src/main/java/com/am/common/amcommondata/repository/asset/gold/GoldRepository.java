@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface GoldRepository extends JpaRepository<Gold, Long> {
+public interface GoldRepository extends JpaRepository<Gold, UUID> {
     List<Gold> findByGoldInfoForm(String form);
     
     @Query("SELECT g FROM Gold g WHERE g.goldInfo.purity >= :minPurity")

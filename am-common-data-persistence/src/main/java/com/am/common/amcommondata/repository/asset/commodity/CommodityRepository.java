@@ -5,9 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public interface CommodityRepository extends JpaRepository<Commodity, Long> {
+public interface CommodityRepository extends JpaRepository<Commodity, UUID> {
     List<Commodity> findByCommodityType(String type);
     List<Commodity> findByForm(String form);
     List<Commodity> findByStorageLocation(String location);
