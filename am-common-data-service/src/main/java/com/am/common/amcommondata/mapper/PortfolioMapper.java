@@ -14,6 +14,7 @@ import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,11 +37,19 @@ public abstract class PortfolioMapper {
     public abstract PortfolioModel toModel(Portfolio entity);
     
     @Mappings({
+        @Mapping(target = "id", ignore = true),
+        @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())"),
+        @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())"),
+        @Mapping(target = "createdBy", source = "model.owner"),
+        @Mapping(target = "updatedBy", source = "model.owner"),
+        @Mapping(target = "version", ignore = true),
         @Mapping(target = "assets", qualifiedByName = "mapModelAssetsToEntities", source = "model.assets")
     })
     public abstract Portfolio toEntity(PortfolioModel model);
     
     @Mappings({
+        @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())"),
+        @Mapping(target = "updatedBy", source = "model.owner"),
         @Mapping(target = "assets", qualifiedByName = "mapModelAssetsToEntities", source = "model.assets")
     })
     public abstract Portfolio updateEntity(@MappingTarget Portfolio entity, PortfolioModel model);

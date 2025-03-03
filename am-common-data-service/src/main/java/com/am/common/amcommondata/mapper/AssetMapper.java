@@ -14,13 +14,15 @@ public interface AssetMapper {
     AssetModel toModel(Asset entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
+    @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "modifiedAt", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "portfolio", ignore = true)
     Asset toEntity(AssetModel model);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
+    @Mapping(target = "modifiedAt", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "portfolio", ignore = true)
     default Asset updateEntity(@MappingTarget Asset entity, AssetModel model) {
         if (model == null) {
             return entity;
@@ -34,7 +36,6 @@ public interface AssetMapper {
         entity.setQuantity(model.getQuantity());
         entity.setAvgBuyingPrice(model.getAvgBuyingPrice());
         entity.setCurrentValue(model.getCurrentValue());
-        //entity.setIsActive(model.getIsActive());
 
         return entity;
     }
