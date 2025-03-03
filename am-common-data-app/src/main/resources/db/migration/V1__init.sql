@@ -5,7 +5,7 @@ CREATE TABLE portfolios (
     description TEXT,
     owner VARCHAR(255),
     currency VARCHAR(10),
-    fundType VARCHAR(100),
+    fundType VARCHAR(100) DEFAULT 'DEFAULT',
     status VARCHAR(50),
     tags TEXT,
     notes TEXT,
@@ -13,7 +13,7 @@ CREATE TABLE portfolios (
     updated_at TIMESTAMP,
     created_by VARCHAR(255),
     updated_by VARCHAR(255),
-    version BIGINT
+    version INTEGER NOT NULL DEFAULT 0 
 );
 
 -- Create assets table
@@ -57,10 +57,10 @@ CREATE TABLE equity (
 -- Insert sample portfolio data
 
 
-INSERT INTO portfolios (id, name, description, owner, currency, fundType, status, created_at, updated_at)
+INSERT INTO portfolios (id, name, description, owner, currency, status, created_at, updated_at)
 VALUES 
-    ('123e4567-e89b-12d3-a456-426614174000', 'Growth Portfolio', 'Long-term growth investment portfolio', 'MKU257', 'INR', 'GROWTH', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('123e4567-e89b-12d3-a456-426614174001', 'Dividend Portfolio', 'Income focused portfolio', 'MKU257', 'INR', 'INCOME', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    ('123e4567-e89b-12d3-a456-426614174000', 'Growth Portfolio', 'Long-term growth investment portfolio', 'MKU257', 'INR', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('123e4567-e89b-12d3-a456-426614174001', 'Dividend Portfolio', 'Income focused portfolio', 'MKU257', 'INR', 'ACTIVE', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- Insert sample asset data
 INSERT INTO assets (id, symbol, name, portfolio_id, asset_type, quantity, avg_buying_price, current_value, currency, status, created_at, modified_at)

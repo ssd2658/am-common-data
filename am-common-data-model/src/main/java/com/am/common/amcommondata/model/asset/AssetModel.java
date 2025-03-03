@@ -7,12 +7,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @SuperBuilder
+@NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
 public class AssetModel {
     private UUID id;

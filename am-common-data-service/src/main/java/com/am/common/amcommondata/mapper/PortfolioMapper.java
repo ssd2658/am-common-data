@@ -4,12 +4,15 @@ import com.am.common.amcommondata.domain.portfolio.Portfolio;
 import com.am.common.amcommondata.domain.asset.Asset;
 import com.am.common.amcommondata.model.PortfolioModel;
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.am.common.amcommondata.model.enums.FundType;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,24 +21,44 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring",
         uses = {AssetMapper.class},
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-@Component
 public abstract class PortfolioMapper {
     
     @Autowired
     protected AssetMapper assetMapper;
     
-    @Mapping(target = "totalValue", expression = "java(calculateTotalValue(entity))")
-    @Mapping(target = "assetCount", expression = "java(getAssetCount(entity))")
-    @Mapping(target = "status", expression = "java(determinePortfolioStatus(entity))")
-    @Mapping(target = "assets", expression = "java(mapAssetsIfPresent(entity))")
+    @Mappings({
+        @Mapping(target = "totalValue", qualifiedByName = "calculateTotalValue", source = "entity"),
+        @Mapping(target = "assetCount", qualifiedByName = "getAssetCount", source = "entity"),
+        @Mapping(target = "fundType", qualifiedByName = "determineFundType", source = "entity"),
+        @Mapping(target = "status", qualifiedByName = "determinePortfolioStatus", source = "entity"),
+        @Mapping(target = "assets", qualifiedByName = "mapAssetsIfPresent", source = "entity")
+    })
     public abstract PortfolioModel toModel(Portfolio entity);
     
-    @Mapping(target = "assets", ignore = true)
+    @Mappings({
+        @Mapping(target = "assets", qualifiedByName = "mapModelAssetsToEntities", source = "model.assets")
+    })
     public abstract Portfolio toEntity(PortfolioModel model);
     
-    @Mapping(target = "assets", ignore = true)
+    @Mappings({
+        @Mapping(target = "assets", qualifiedByName = "mapModelAssetsToEntities", source = "model.assets")
+    })
     public abstract Portfolio updateEntity(@MappingTarget Portfolio entity, PortfolioModel model);
     
+    @Named("mapModelAssetsToEntities")
+    protected Set<Asset> mapModelAssetsToEntities(Set<AssetModel> assets) {
+        if (assets == null || assets.isEmpty()) {
+            return new HashSet<>();
+        }
+        Set<Asset> entityAssets = new HashSet<>();
+        for (AssetModel assetModel : assets) {
+            Asset asset = assetMapper.toEntity(assetModel);
+            entityAssets.add(asset);
+        }
+        return entityAssets;
+    }
+
+    @Named("calculateTotalValue")
     protected Double calculateTotalValue(Portfolio portfolio) {
         if (portfolio == null || portfolio.getAssets() == null) {
             return 0.0;
@@ -45,7 +68,16 @@ public abstract class PortfolioMapper {
                 .mapToDouble(Asset::getCurrentValue)
                 .sum();
     }
+
+    @Named("determineFundType")
+    protected FundType determineFundType(Portfolio portfolio) {
+        if (portfolio == null || portfolio.getFundType() == null) {
+            return null;
+        }
+        return portfolio.getFundType();
+    }
     
+    @Named("determinePortfolioStatus")
     protected String determinePortfolioStatus(Portfolio portfolio) {
         if (portfolio == null || portfolio.getAssets() == null) {
             return "EMPTY";
@@ -53,6 +85,7 @@ public abstract class PortfolioMapper {
         return portfolio.getAssets().isEmpty() ? "EMPTY" : "ACTIVE";
     }
     
+    @Named("getAssetCount")
     protected Integer getAssetCount(Portfolio portfolio) {
         if (portfolio == null || portfolio.getAssets() == null || portfolio.getAssets().isEmpty()) {
             return null;
@@ -60,13 +93,15 @@ public abstract class PortfolioMapper {
         return portfolio.getAssets().size();
     }
     
+    @Named("mapAssetsIfPresent")
     protected Set<AssetModel> mapAssetsIfPresent(Portfolio portfolio) {
-        if (portfolio == null || portfolio.getAssets() == null || portfolio.getAssets().isEmpty()) {
-            return null;
+        if (portfolio == null) {
+            return new HashSet<>();
         }
         return mapAssets(portfolio.getAssets());
     }
     
+    @Named("mapAssets")
     protected Set<AssetModel> mapAssets(Set<Asset> assets) {
         if (assets == null) {
             return new HashSet<>();

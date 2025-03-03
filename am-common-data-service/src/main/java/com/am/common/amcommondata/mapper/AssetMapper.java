@@ -8,13 +8,9 @@ import org.mapstruct.MappingTarget;
 import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
-@Component
 public interface AssetMapper {
 
     @Mapping(target = "marketData", ignore = true)
-    @Mapping(target = "currentValue", ignore = true)
-    @Mapping(target = "profitLoss", ignore = true)
-    @Mapping(target = "profitLossPercentage", ignore = true)
     AssetModel toModel(Asset entity);
 
     @Mapping(target = "id", ignore = true)
@@ -35,7 +31,10 @@ public interface AssetMapper {
         entity.setDescription(model.getDescription());
         entity.setAssetType(model.getAssetType());
         entity.setBrokerType(model.getBrokerType());
-        //entity.setInvestmentValue(model.getInvestmentValue());
+        entity.setQuantity(model.getQuantity());
+        entity.setAvgBuyingPrice(model.getAvgBuyingPrice());
+        entity.setCurrentValue(model.getCurrentValue());
+        //entity.setIsActive(model.getIsActive());
 
         return entity;
     }

@@ -34,8 +34,15 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Transactional
     public PortfolioModel createPortfolio(PortfolioModel portfolioModel) {
         Portfolio portfolio = portfolioMapper.toEntity(portfolioModel);
-        portfolio = portfolioRepository.save(portfolio);
-        return portfolioMapper.toModel(portfolio);
+        
+        // Set up bidirectional relationships for assets
+        if (portfolio.getAssets() != null) {
+            portfolio.getAssets().forEach(asset -> asset.setPortfolio(portfolio));
+        }
+        
+        // Save portfolio with assets - CascadeType.ALL will handle asset persistence
+        var savedPortfolio = portfolioRepository.save(portfolio);
+        return portfolioMapper.toModel(savedPortfolio);
     }
 
     @Transactional

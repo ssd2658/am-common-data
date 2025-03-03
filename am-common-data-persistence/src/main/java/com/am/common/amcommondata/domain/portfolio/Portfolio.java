@@ -5,7 +5,9 @@ import com.am.common.amcommondata.model.enums.FundType;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,7 +31,6 @@ public class Portfolio {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(nullable = false)
     private String name;
 
     private String description;
@@ -37,12 +38,14 @@ public class Portfolio {
     private String currency;
     
     @Enumerated(EnumType.STRING)
-    @Column(name = "fund_type", nullable = false)
+    @Column(name = "fund_type", nullable = true)
     private FundType fundType;
     private String status;
     private String tags;
     private String notes;
 
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Asset> assets = new HashSet<>();
 
@@ -52,6 +55,7 @@ public class Portfolio {
     private String updatedBy;
     
     @Version
+    @Column(nullable = true)
     private Long version;
 
     public void addAsset(Asset asset) {

@@ -6,7 +6,9 @@ import com.am.common.amcommondata.model.enums.BrokerType;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -38,7 +40,9 @@ public class Asset {
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 

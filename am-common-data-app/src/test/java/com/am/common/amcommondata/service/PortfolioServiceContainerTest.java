@@ -2,6 +2,9 @@ package com.am.common.amcommondata.service;
 
 import com.am.common.amcommondata.config.TestConfig;
 import com.am.common.amcommondata.model.PortfolioModel;
+import com.am.common.amcommondata.model.asset.AssetModel;
+import com.am.common.amcommondata.model.enums.AssetType;
+import com.am.common.amcommondata.model.enums.BrokerType;
 import com.am.common.amcommondata.model.enums.FundType;
 import com.am.common.amcommondata.repository.portfolio.PortfolioRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +30,7 @@ public class PortfolioServiceContainerTest {
     @Autowired
     private PortfolioRepository portfolioRepository;
 
+
     private PortfolioModel testPortfolio;
 
     @BeforeEach
@@ -37,20 +41,7 @@ public class PortfolioServiceContainerTest {
         assetTypes.add("BOND");
         assetTypes.add("STOCK");
         
-        testPortfolio = PortfolioModel.builder()
-                .name("Test Portfolio")
-                .description("Test Portfolio Description")
-                .assets(new HashSet<>())
-                .owner("test-user")
-                .fundType(FundType.DEFAULT)
-                //.assetTypes(assetTypes)
-                .totalValue(100000.0)
-                .assetCount(0)
-                .status("ACTIVE")
-                .createdBy("test-user")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        testPortfolio = createTestPortfolio(FundType.DEFAULT);
     }
 
     @Test
@@ -61,7 +52,8 @@ public class PortfolioServiceContainerTest {
         assertEquals(testPortfolio.getName(), created.getName());
         assertEquals(testPortfolio.getDescription(), created.getDescription());
         assertEquals(testPortfolio.getCreatedBy(), created.getCreatedBy());
-        //assertEquals(testPortfolio.getAssetTypes(), created.getAssetTypes());
+        assertNotNull(created.getAssets());
+        assertEquals(1, created.getAssets().size());
     }
 
     @Test
@@ -79,20 +71,7 @@ public class PortfolioServiceContainerTest {
     void shouldGetAllPortfolios() {
         portfolioService.createPortfolio(testPortfolio);
         
-        PortfolioModel secondPortfolio = PortfolioModel.builder()
-                .name("Second Portfolio")
-                .description("Second Portfolio Description")
-                .assets(new HashSet<>())
-                .owner("test-user")
-                .fundType(FundType.EQUITY_LARGE_CAP)
-                //.assetTypes(new HashSet<>())
-                .totalValue(200000.0)
-                .assetCount(0)
-                .status("ACTIVE")
-                .createdBy("test-user")
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        PortfolioModel secondPortfolio = createTestPortfolio(FundType.EQUITY_LARGE_CAP);
         portfolioService.createPortfolio(secondPortfolio);
 
         List<PortfolioModel> portfolios = portfolioService.getPortfoliosByUserId("test-user");
@@ -125,5 +104,37 @@ public class PortfolioServiceContainerTest {
         portfolioService.deletePortfolio(created.getId());
         
         assertTrue(portfolioRepository.findById(created.getId()).isEmpty());
+    }
+
+    private PortfolioModel createTestPortfolio(FundType fundType) {
+        AssetModel asset = createTestAsset("isin", "symbol", "name", "description", AssetType.EQUITY, null);
+        PortfolioModel portfolio = PortfolioModel.builder()
+                .name("Test Portfolio")
+                .description("Test Portfolio Description")
+                .assets(Set.of(asset))
+                .owner("test-user")
+                .fundType(fundType)
+                .totalValue(100000.0)
+                .assetCount(0)
+                .status("ACTIVE")
+                .createdBy("test-user")
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return portfolio;
+    }
+
+    private AssetModel createTestAsset(String isin, String symbol, String name, String description, AssetType assetType, PortfolioModel portfolio) {
+        AssetModel asset = AssetModel.builder()
+                .isin(isin)
+                .symbol(symbol)
+                .name(name)
+                .description(description)
+                .assetType(assetType)   
+                .quantity(100.0)
+                .avgBuyingPrice(10.0)
+                .brokerType(BrokerType.DHAN) 
+                .build();
+        return asset;
     }
 }
