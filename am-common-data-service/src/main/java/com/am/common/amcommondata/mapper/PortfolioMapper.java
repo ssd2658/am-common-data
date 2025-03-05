@@ -4,6 +4,7 @@ import com.am.common.amcommondata.domain.portfolio.Portfolio;
 import com.am.common.amcommondata.domain.asset.Asset;
 import com.am.common.amcommondata.model.PortfolioModel;
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.am.common.amcommondata.model.enums.BrokerType;
 import com.am.common.amcommondata.model.enums.FundType;
 
 import org.mapstruct.Mapper;
@@ -14,7 +15,6 @@ import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,9 +28,8 @@ public abstract class PortfolioMapper {
     protected AssetMapper assetMapper;
     
     @Mappings({
-        @Mapping(target = "totalValue", qualifiedByName = "calculateTotalValue", source = "entity"),
-        @Mapping(target = "assetCount", qualifiedByName = "getAssetCount", source = "entity"),
         @Mapping(target = "fundType", qualifiedByName = "determineFundType", source = "entity"),
+        @Mapping(target = "brokerType", qualifiedByName = "determineBrokerType", source = "entity"),
         @Mapping(target = "status", qualifiedByName = "determinePortfolioStatus", source = "entity"),
         @Mapping(target = "assets", qualifiedByName = "mapAssetsIfPresent", source = "entity")
     })
@@ -38,6 +37,8 @@ public abstract class PortfolioMapper {
     
     @Mappings({
         @Mapping(target = "id", ignore = true),
+        @Mapping(target = "totalValue", qualifiedByName = "calculateTotalValue", source = "model"),
+        @Mapping(target = "assetCount", qualifiedByName = "getAssetCount", source = "model"),
         @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())"),
         @Mapping(target = "updatedAt", expression = "java(java.time.LocalDateTime.now())"),
         @Mapping(target = "createdBy", source = "model.owner"),
@@ -73,8 +74,8 @@ public abstract class PortfolioMapper {
             return 0.0;
         }
         return portfolio.getAssets().stream()
-                .filter(asset -> asset != null && asset.getCurrentValue() != null)
-                .mapToDouble(Asset::getCurrentValue)
+                .filter(asset -> asset != null && asset.getAvgBuyingPrice() != null && asset.getQuantity() != null)
+                .mapToDouble(asset -> asset.getAvgBuyingPrice() * asset.getQuantity())
                 .sum();
     }
 
@@ -101,6 +102,25 @@ public abstract class PortfolioMapper {
         }
         return portfolio.getAssets().size();
     }
+
+    @Named("getAssetCount")
+    protected Integer getAssetCount(PortfolioModel portfolio) {
+        if (portfolio == null || portfolio.getAssets() == null || portfolio.getAssets().isEmpty()) {
+            return null;
+        }
+        return portfolio.getAssets().size();
+    }
+
+    @Named("calculateTotalValue")
+    protected Double calculateTotalValue(PortfolioModel portfolio) {
+        if (portfolio == null || portfolio.getAssets() == null) {
+            return 0.0;
+        }
+        return portfolio.getAssets().stream()
+                .filter(asset -> asset != null && asset.getAvgBuyingPrice() != null && asset.getQuantity() != null)
+                .mapToDouble(asset -> asset.getAvgBuyingPrice() * asset.getQuantity())
+                .sum();
+    }
     
     @Named("mapAssetsIfPresent")
     protected Set<AssetModel> mapAssetsIfPresent(Portfolio portfolio) {
@@ -119,5 +139,13 @@ public abstract class PortfolioMapper {
                 .filter(asset -> asset != null)
                 .map(assetMapper::toModel)
                 .collect(Collectors.toSet());
+    }
+
+    @Named("determineBrokerType")
+    protected BrokerType determineBrokerType(Portfolio portfolio) {
+        if (portfolio == null || portfolio.getBrokerType() == null) {
+            return null;
+        }
+        return portfolio.getBrokerType();
     }
 }

@@ -7,9 +7,9 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
-import java.util.HashSet;
 
 import com.am.common.amcommondata.model.asset.AssetModel;
+import com.am.common.amcommondata.model.enums.BrokerType;
 import com.am.common.amcommondata.model.enums.FundType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -31,6 +31,7 @@ public class PortfolioModel {
     private String notes;
     private Set<AssetModel> assets;
     private Double totalValue;
+    private BrokerType brokerType;
     private Integer assetCount;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

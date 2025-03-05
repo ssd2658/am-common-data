@@ -33,9 +33,9 @@ public class Asset {
     @Column(nullable = false)
     private String symbol;
 
+    @Column(nullable = false)
     private String isin;
 
-    @Column(nullable = false)
     private String name;
 
     private String description;
