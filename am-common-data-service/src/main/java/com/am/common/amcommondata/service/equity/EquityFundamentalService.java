@@ -8,8 +8,9 @@ import java.util.UUID;
 
 public interface EquityFundamentalService {
     EquityFundamental save(EquityFundamental fundamental);
+    EquityFundamental saveWithEquityKey(String searchKey, EquityFundamental fundamental);
     Optional<EquityFundamental> findById(UUID id);
-    List<EquityFundamental> findByEquityId(UUID equityId);
-    List<EquityFundamental> findByEquityIdAndDateRange(UUID equityId, LocalDate startDate, LocalDate endDate);
+    List<EquityFundamental> findByEquityKey(String key);
+    List<EquityFundamental> findByEquityKeyAndDateRange(String key, LocalDate startDate, LocalDate endDate);
     void deleteById(UUID id);
 }

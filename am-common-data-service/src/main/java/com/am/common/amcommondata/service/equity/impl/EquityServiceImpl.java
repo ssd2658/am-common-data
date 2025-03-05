@@ -29,13 +29,8 @@ public class EquityServiceImpl implements EquityService {
     }
 
     @Override
-    public Optional<EquityInfo> findByIsin(String isin) {
-        return equityRepository.findByCompanyInfoIsin(isin);
-    }
-
-    @Override
-    public Optional<EquityInfo> findBySymbol(String symbol) {
-        return equityRepository.findByCompanyInfoSymbol(symbol);
+    public Optional<EquityInfo> findByEquityKey(String key) {
+        return equityRepository.findByEquityKey(key);
     }
 
     @Override

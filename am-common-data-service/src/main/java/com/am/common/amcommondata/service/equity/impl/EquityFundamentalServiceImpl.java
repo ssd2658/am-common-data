@@ -1,8 +1,11 @@
 package com.am.common.amcommondata.service.equity.impl;
 
 import com.am.common.amcommondata.domain.asset.equity.EquityFundamental;
+import com.am.common.amcommondata.domain.asset.equity.EquityInfo;
 import com.am.common.amcommondata.repository.equity.EquityFundamentalRepository;
 import com.am.common.amcommondata.service.equity.EquityFundamentalService;
+import com.am.common.amcommondata.service.equity.EquityService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,20 @@ import java.util.UUID;
 public class EquityFundamentalServiceImpl implements EquityFundamentalService {
     
     private final EquityFundamentalRepository fundamentalRepository;
+    private final EquityService equityService;
 
     @Override
     @Transactional
     public EquityFundamental save(EquityFundamental fundamental) {
+        return fundamentalRepository.save(fundamental);
+    }
+
+    @Override
+    @Transactional
+    public EquityFundamental saveWithEquityKey(String key, EquityFundamental fundamental) {
+        EquityInfo equity = equityService.findByEquityKey(key)
+            .orElseThrow(() -> new IllegalArgumentException("No equity found with search key (ISIN/Symbol): " + key));
+        fundamental.setEquity(equity);
         return fundamentalRepository.save(fundamental);
     }
 
@@ -31,13 +44,13 @@ public class EquityFundamentalServiceImpl implements EquityFundamentalService {
     }
 
     @Override
-    public List<EquityFundamental> findByEquityId(UUID equityId) {
-        return fundamentalRepository.findByEquityId(equityId);
+    public List<EquityFundamental> findByEquityKey(String searchKey) {
+        return fundamentalRepository.findByIsinOrSymbol(searchKey);
     }
 
     @Override
-    public List<EquityFundamental> findByEquityIdAndDateRange(UUID equityId, LocalDate startDate, LocalDate endDate) {
-        return fundamentalRepository.findByEquityIdAndAuditInfoDataDateBetween(equityId, startDate, endDate);
+    public List<EquityFundamental> findByEquityKeyAndDateRange(String searchKey, LocalDate startDate, LocalDate endDate) {
+        return fundamentalRepository.findByIsinOrSymbolAndDateRange(searchKey, startDate, endDate);
     }
 
     @Override

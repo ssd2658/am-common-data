@@ -7,7 +7,6 @@ import java.util.UUID;
 public interface EquityService {
     EquityInfo save(EquityInfo equity);
     Optional<EquityInfo> findById(UUID id);
-    Optional<EquityInfo> findByIsin(String isin);
-    Optional<EquityInfo> findBySymbol(String symbol);
+    Optional<EquityInfo> findByEquityKey(String key);
     void deleteById(UUID id);
 }
