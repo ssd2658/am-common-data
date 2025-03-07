@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import com.am.common.amcommondata.domain.asset.equity.embedded.CompanyInfo;
 
 import com.am.common.amcommondata.domain.common.AuditInfo;
+import com.am.common.amcommondata.domain.indices.EquityIndexMembership;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,9 @@ public class EquityInfo {
 
     @OneToMany(mappedBy = "equity", cascade = CascadeType.ALL)
     private List<EquityTechnical> technicalData;
+
+    @OneToMany(mappedBy = "equity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EquityIndexMembership> indexMemberships;
 
     @Embedded
     private AuditInfo auditInfo;

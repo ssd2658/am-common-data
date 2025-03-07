@@ -36,6 +36,4 @@ public class TechnicalIndicators {
     @Column(name = "bollinger_lower", precision = 10, scale = 2)
     private BigDecimal bollingerLower;
 
-    @Column(name = "atr", precision = 10, scale = 2)
-    private BigDecimal atr;
 }
