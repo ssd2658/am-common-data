@@ -20,15 +20,15 @@ import org.testcontainers.junit.jupiter.Container;
 })
 @EntityScan(basePackages = {
     "com.am.common.amcommondata.domain",
-    "com.am.common.amcommondata.domain.asset"
+    "com.am.common.amcommondata.domain.asset",
+    "com.am.common.amcommondata.domain.portfolio"
 })
 @EnableJpaRepositories(basePackages = {
-    "com.am.common.amcommondata.repository",
-    "com.am.common.amcommondata.repository.asset"
+    "com.am.common.amcommondata.repository.portfolio"
 })
 public class TestConfig {
     @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine")
             .withDatabaseName("testdb")
             .withUsername("test")
             .withPassword("test");
@@ -38,5 +38,9 @@ public class TestConfig {
         registry.add("spring.datasource.url", postgres::getJdbcUrl);
         registry.add("spring.datasource.username", postgres::getUsername);
         registry.add("spring.datasource.password", postgres::getPassword);
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.jpa.show-sql", () -> "true");
+        registry.add("spring.jpa.properties.hibernate.format_sql", () -> "true");
+        registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
     }
 }
