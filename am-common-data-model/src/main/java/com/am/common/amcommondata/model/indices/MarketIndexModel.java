@@ -13,7 +13,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MarketIndexModel {
-    private UUID id;
+    private String key;
+    private String index;
+    private String indexSymbol;
     private String code;
     private String name;
     private String description;
