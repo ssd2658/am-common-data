@@ -15,6 +15,7 @@
         <module>am-common-data-persistence</module>
         <module>am-common-data-service</module>
         <module>am-common-data-app</module>
+        <module>am-common-data-mongo</module>
     </modules>
 
     <properties>
@@ -40,6 +41,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-mongodb</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
             <dependency>
