@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import com.am.common.amcommondata.document.security.SecurityDocument;
@@ -21,15 +22,16 @@ public class SecurityService {
     private final SecurityRepository securityRepository;
     private final SecurityModelMapper securityMapper;
     private final AuditService auditService;
+    private final MongoTemplate mongoTemplate;
 
     public SecurityModel save(SecurityModel securityModel) {
         SecurityDocument document = securityMapper.toDocument(securityModel);
         auditService.updateAudit(document);
-        return securityMapper.toModel(securityRepository.save(document));
+        return securityMapper.toModel(mongoTemplate.save(document));
     }
 
     public Optional<SecurityModel> findById(UUID id) {
-        return securityRepository.findById(id)
+        return securityRepository.findById(id.toString())
                 .map(securityMapper::toModel);
     }
 
@@ -51,14 +53,14 @@ public class SecurityService {
     }
 
     public List<SecurityModel> findAllVersionsById(UUID id) {
-        return securityRepository.findAllVersionsById(id)
+        return securityRepository.findAllVersionsById(id.toString())
                 .stream()
                 .map(securityMapper::toModel)
                 .collect(Collectors.toList());
     }
 
     public void deleteById(UUID id) {
-        securityRepository.deleteById(id);
+        securityRepository.deleteById(id.toString());
     }
 
     public void deleteAll() {
@@ -71,8 +73,8 @@ public class SecurityService {
                 .peek(auditService::updateAudit)
                 .collect(Collectors.toList());
         
-        return securityRepository.saveAll(documents)
-                .stream()
+        return documents.stream()
+                .map(mongoTemplate::save)
                 .map(securityMapper::toModel)
                 .collect(Collectors.toList());
     }

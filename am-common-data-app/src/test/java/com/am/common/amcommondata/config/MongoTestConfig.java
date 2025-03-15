@@ -6,9 +6,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.core.convert.DefaultDbRefResolver;
+import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
+import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
+import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.utility.DockerImageName;
+
 import jakarta.annotation.PreDestroy;
 
 @TestConfiguration
@@ -24,8 +30,8 @@ public class MongoTestConfig {
     }
 
     @Bean
-    public MongoTemplate mongoTemplate(MongoDatabaseFactory mongoDbFactory) {
-        return new MongoTemplate(mongoDbFactory);
+    public MongoTemplate mongoTemplate(MongoDatabaseFactory mongoDbFactory, MappingMongoConverter converter) {
+        return new MongoTemplate(mongoDbFactory, converter);
     }
 
     @Bean
@@ -34,6 +40,15 @@ public class MongoTestConfig {
             System.getProperty("spring.data.mongodb.uri", "mongodb://localhost:27017/test")
         );
     }
+
+    // @Bean
+    // public MappingMongoConverter mappingMongoConverter(MongoDatabaseFactory databaseFactory, MongoMappingContext mongoMappingContext, MongoCustomConversions conversions) {
+    //     DefaultDbRefResolver dbRefResolver = new DefaultDbRefResolver(databaseFactory);
+    //     MappingMongoConverter converter = new MappingMongoConverter(dbRefResolver, mongoMappingContext);
+    //     converter.setTypeMapper(new DefaultMongoTypeMapper(null));
+    //     converter.setCustomConversions(conversions);
+    //     return converter;
+    // }
 
     @PreDestroy
     public void cleanup() {

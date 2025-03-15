@@ -10,8 +10,8 @@ import org.springframework.data.repository.NoRepositoryBean;
 import com.am.common.amcommondata.document.base.BaseDocument;
 
 @NoRepositoryBean
-public interface BaseRepository<T extends BaseDocument> extends MongoRepository<T, UUID> {
+public interface BaseRepository<T extends BaseDocument> extends MongoRepository<T, String> {
     
     @Query(value = "{'_id': ?0}", sort = "{'audit.version': -1}")
-    List<T> findAllVersionsById(UUID id);
+    List<T> findAllVersionsById(String id);
 }

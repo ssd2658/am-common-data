@@ -1,5 +1,7 @@
 package com.am.common.amcommondata.mapper;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Component;
 
 import com.am.common.amcommondata.document.common.AuditMetadata;
@@ -21,14 +23,17 @@ public class SecurityModelMapper {
             return null;
         }
 
-        return SecurityModel.builder()
-                .id(document.getId())
+        SecurityModel model = SecurityModel.builder()
                 .status(document.getStatus())
                 .audit(toAuditModel(document.getAudit()))
                 .key(toKeyModel(document.getKey()))
                 .metadata(toMetadataModel(document.getMetadata()))
                 .companyInfo(toCompanyInfoModel(document.getCompanyInfo()))
                 .build();
+        
+        // Set ID after building to avoid UUID encoding issues
+        model.setId(UUID.fromString(document.getId()));
+        return model;
     }
 
     public SecurityDocument toDocument(SecurityModel model) {
@@ -36,14 +41,17 @@ public class SecurityModelMapper {
             return null;
         }
 
-        return SecurityDocument.builder()
-                .id(model.getId())
+        SecurityDocument document = SecurityDocument.builder()
                 .status(model.getStatus())
                 .audit(toAuditMetadata(model.getAudit()))
                 .key(toKeyInfo(model.getKey()))
                 .metadata(toSecurityMetadata(model.getMetadata()))
                 .companyInfo(toCompanyInfo(model.getCompanyInfo()))
                 .build();
+        
+        // Set ID after building to avoid UUID encoding issues
+        document.setId(model.getId().toString());
+        return document;
     }
 
     private AuditModel toAuditModel(AuditMetadata metadata) {

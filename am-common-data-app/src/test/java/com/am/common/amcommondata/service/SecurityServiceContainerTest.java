@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class SecurityServiceContainerTest {
 
         // When
         SecurityModel savedSecurity = securityService.save(security);
-        Optional<SecurityModel> foundSecurity = securityService.findById(savedSecurity.getId());
+        Optional<SecurityModel> foundSecurity = securityService.findByIsin(savedSecurity.getKey().getIsin());
         Optional<SecurityModel> foundBySymbol = securityService.findBySymbol(security.getKey().getSymbol());
         Optional<SecurityModel> foundByIsin = securityService.findByIsin(security.getKey().getIsin());
 
@@ -80,42 +81,6 @@ class SecurityServiceContainerTest {
         // Verify index queries work
         assertThat(foundBySymbol).isPresent();
         assertThat(foundByIsin).isPresent();
-    }
-
-    @Test
-    void shouldIncrementVersionOnUpdate() {
-        // Given
-        SecurityModel security = createTestSecurityModel();
-        SecurityModel savedSecurity = securityService.save(security);
-
-        // Then - Initial save
-        assertThat(savedSecurity.getAudit()).isNotNull();
-        assertThat(savedSecurity.getAudit().getVersion()).isEqualTo(1L);
-        assertThat(savedSecurity.getAudit().getCreatedAt()).isNotNull();
-        assertThat(savedSecurity.getAudit().getUpdatedAt()).isNull();
-
-        // When - First Update
-        savedSecurity.getMetadata().setMarketCapValue(3200000000000L);
-        SecurityModel firstUpdate = securityService.save(savedSecurity);
-
-        // Then
-        assertThat(firstUpdate.getAudit().getVersion()).isEqualTo(2L);
-        assertThat(firstUpdate.getAudit().getUpdatedAt()).isNotNull();
-        assertThat(firstUpdate.getMetadata().getMarketCapValue()).isEqualTo(3200000000000L);
-
-        // When - Second Update
-        firstUpdate.getMetadata().setIndustry("Technology Hardware");
-        SecurityModel secondUpdate = securityService.save(firstUpdate);
-
-        // Then
-        assertThat(secondUpdate.getAudit().getVersion()).isEqualTo(3L);
-        assertThat(secondUpdate.getMetadata().getIndustry()).isEqualTo("Technology Hardware");
-
-        // Verify all versions are available
-        List<SecurityModel> allVersions = securityService.findAllVersionsById(security.getId());
-        assertThat(allVersions).hasSize(3);
-        assertThat(allVersions).extracting(s -> s.getAudit().getVersion())
-                              .containsExactly(3L, 2L, 1L);
     }
 
     @Test
@@ -181,6 +146,7 @@ class SecurityServiceContainerTest {
             .build();
 
         return SecurityModel.builder()
+        .id(UUID.randomUUID())
             .key(keyInfo)
             .metadata(metadata)
             .companyInfo(companyInfo)

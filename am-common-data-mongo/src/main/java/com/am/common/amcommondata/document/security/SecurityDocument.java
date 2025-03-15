@@ -9,7 +9,6 @@ import com.am.common.amcommondata.document.security.metadata.SecurityMetadata;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -17,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Document(collection = "securities")
 public class SecurityDocument extends BaseDocument {
     private KeyInfo key;

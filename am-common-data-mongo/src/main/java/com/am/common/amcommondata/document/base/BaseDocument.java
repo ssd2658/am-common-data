@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseDocument {
     
     @Id
-    private UUID id;
+    private String id;
     
     @Field("status")
     private String status;
@@ -28,8 +28,4 @@ public abstract class BaseDocument {
     private AuditMetadata audit;
     
     private UUID parentId; // Reference to parent document if any
-    
-    public UUID getId() {
-        return id != null ? id : UUID.randomUUID();
-    }
 }
