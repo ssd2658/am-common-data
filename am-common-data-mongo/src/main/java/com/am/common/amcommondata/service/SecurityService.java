@@ -1,5 +1,6 @@
 package com.am.common.amcommondata.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -73,8 +74,14 @@ public class SecurityService {
                 .peek(auditService::updateAudit)
                 .collect(Collectors.toList());
         
-        return documents.stream()
-                .map(mongoTemplate::save)
+        List<SecurityDocument> savedDocuments = new ArrayList<>();
+        for (int i = 0; i < documents.size(); i += 100) {
+            int end = Math.min(i + 100, documents.size());
+            List<SecurityDocument> batch = documents.subList(i, end);
+            savedDocuments.addAll(mongoTemplate.insertAll(batch));
+        }
+        
+        return savedDocuments.stream()
                 .map(securityMapper::toModel)
                 .collect(Collectors.toList());
     }

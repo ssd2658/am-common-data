@@ -1,9 +1,12 @@
 package com.am.common.amcommondata.document.security.metadata;
 
 import java.time.LocalDateTime;
+
 import java.util.Map;
 
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.am.common.amcommondata.model.MarketCapType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,10 +26,10 @@ public class SecurityMetadata {
     private String industry;
     
     @Field("market_cap_value")
-    private Long marketCapValue;
+    private Double marketCapValue;
     
-    @Field("cap_category")
-    private String capCategory;
+    @Field("market_cap_type")
+    private MarketCapType marketCapType;
     
     @Field("security_type")
     private String securityType;

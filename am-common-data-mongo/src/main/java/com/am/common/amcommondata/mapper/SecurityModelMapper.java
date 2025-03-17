@@ -10,6 +10,7 @@ import com.am.common.amcommondata.document.security.metadata.CompanyInfo;
 import com.am.common.amcommondata.document.security.metadata.KeyInfo;
 import com.am.common.amcommondata.document.security.metadata.SecurityMetadata;
 import com.am.common.amcommondata.model.AuditModel;
+import com.am.common.amcommondata.model.MarketCapType;
 import com.am.common.amcommondata.model.security.CompanyInfoModel;
 import com.am.common.amcommondata.model.security.SecurityKeyModel;
 import com.am.common.amcommondata.model.security.SecurityMetadataModel;
@@ -119,7 +120,7 @@ public class SecurityModelMapper {
                 .sector(metadata.getSector())
                 .industry(metadata.getIndustry())
                 .marketCapValue(metadata.getMarketCapValue())
-                .capCategory(metadata.getCapCategory())
+                .marketCapType(metadata.getMarketCapType())
                 .securityType(metadata.getSecurityType())
                 .exchange(metadata.getExchange())
                 .countryOfIncorporation(metadata.getCountryOfIncorporation())
@@ -139,7 +140,7 @@ public class SecurityModelMapper {
                 .sector(model.getSector())
                 .industry(model.getIndustry())
                 .marketCapValue(model.getMarketCapValue())
-                .capCategory(model.getCapCategory())
+                .marketCapType(getMarketCapType(model.getMarketCapValue()))
                 .securityType(model.getSecurityType())
                 .exchange(model.getExchange())
                 .countryOfIncorporation(model.getCountryOfIncorporation())
@@ -186,5 +187,22 @@ public class SecurityModelMapper {
                 .description(model.getDescription())
                 .businessDescription(model.getBusinessDescription())
                 .build();
+    }
+
+    public MarketCapType getMarketCapType(Double marketCapValue) {
+        if (marketCapValue != null && marketCapValue > 0) {
+            // Calculate market cap type based on market cap value
+            if (marketCapValue >= 1000000000000D) { // > 1 lakh crore
+                return MarketCapType.LARGE_CAP;
+            } else if (marketCapValue >= 250000000000D) { // > 25k crore
+                return MarketCapType.MID_CAP;
+            } else if (marketCapValue >= 50000000000D) { // > 5k crore
+                return MarketCapType.SMALL_CAP;
+            } else {
+                return MarketCapType.MICRO_CAP;
+            }
+        } else {
+            return MarketCapType.MICRO_CAP;
+        }
     }
 }

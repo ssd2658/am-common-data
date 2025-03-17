@@ -20,6 +20,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import com.am.common.amcommondata.AmCommonDataApplication;
+import com.am.common.amcommondata.model.MarketCapType;
 import com.am.common.amcommondata.model.security.CompanyInfoModel;
 import com.am.common.amcommondata.model.security.SecurityKeyModel;
 import com.am.common.amcommondata.model.security.SecurityMetadataModel;
@@ -91,19 +92,19 @@ class SecurityServiceContainerTest {
         SecurityModel microsoft = createTestSecurityModel();
         microsoft.getKey().setSymbol("MSFT");
         microsoft.getKey().setIsin("US5949181045");
-        microsoft.getMetadata().setMarketCapValue(2800000000000L);
+        microsoft.getMetadata().setMarketCapValue(Double.valueOf(2800000000000L));
         microsoft.getCompanyInfo().setLegalName("Microsoft Corporation");
 
         SecurityModel amazon = createTestSecurityModel();
         amazon.getKey().setSymbol("AMZN");
         amazon.getKey().setIsin("US0231351067");
-        amazon.getMetadata().setMarketCapValue(1500000000000L);
+        amazon.getMetadata().setMarketCapValue(Double.valueOf(1500000000000L));
         amazon.getCompanyInfo().setLegalName("Amazon.com Inc.");
 
         SecurityModel walmart = createTestSecurityModel();
         walmart.getKey().setSymbol("WMT");
         walmart.getKey().setIsin("US9311421039");
-        walmart.getMetadata().setMarketCapValue(400000000000L);
+        walmart.getMetadata().setMarketCapValue(Double.valueOf(400000000000L));
         walmart.getMetadata().setSector("Consumer Defensive");
         walmart.getCompanyInfo().setLegalName("Walmart Inc.");
 
@@ -130,8 +131,8 @@ class SecurityServiceContainerTest {
         SecurityMetadataModel metadata = SecurityMetadataModel.builder()
             .sector("Technology")
             .industry("Consumer Electronics")
-            .marketCapValue(3000000000000L)
-            .capCategory("LARGE_CAP")
+            .marketCapValue(Double.valueOf(3000000000000L))
+            .marketCapType(MarketCapType.LARGE_CAP)
             .securityType("EQUITY")
             .exchange("NASDAQ")
             .countryOfIncorporation("USA")
