@@ -18,6 +18,9 @@ public interface SecurityRepository extends BaseRepository<SecurityDocument> {
     @Query(value = "{'key.isin': ?0}", sort = "{'audit.createdAt': -1}")
     Optional<SecurityDocument> findByIsin(String isin);
     
+    @Query(value = "{$or: [{'key.isin': ?0}, {'key.symbol': ?0}]}", sort = "{'audit.createdAt': -1}")
+    Optional<SecurityDocument> findByKey(String key);
+    
     @Query(value = "{'metadata.sector': ?0}", sort = "{'audit.createdAt': -1}")
     List<SecurityDocument> findBySector(String sector);
     

@@ -19,6 +19,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SecurityMetadata {
     
+    @Field("security_name")
+    private String securityName;
+    
     @Field("sector")
     private String sector;
     

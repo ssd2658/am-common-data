@@ -41,6 +41,11 @@ public class SecurityService {
                 .map(securityMapper::toModel);
     }
 
+    public Optional<SecurityModel> findByKey(String key) {
+        return securityRepository.findByKey(key)
+                .map(securityMapper::toModel);
+    }
+
     public Optional<SecurityModel> findByIsin(String isin) {
         return securityRepository.findByIsin(isin)
                 .map(securityMapper::toModel);

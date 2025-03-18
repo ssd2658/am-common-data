@@ -117,6 +117,7 @@ public class SecurityModelMapper {
         }
 
         return SecurityMetadataModel.builder()
+                .securityName(metadata.getSecurityName())
                 .sector(metadata.getSector())
                 .industry(metadata.getIndustry())
                 .marketCapValue(metadata.getMarketCapValue())
@@ -137,6 +138,7 @@ public class SecurityModelMapper {
         }
 
         return SecurityMetadata.builder()
+                .securityName(model.getSecurityName())
                 .sector(model.getSector())
                 .industry(model.getIndustry())
                 .marketCapValue(model.getMarketCapValue())

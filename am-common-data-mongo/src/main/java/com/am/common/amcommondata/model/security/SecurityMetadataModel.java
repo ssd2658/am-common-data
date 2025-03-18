@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SecurityMetadataModel {
+    private String securityName;
     private String sector;
     private String industry;
     private Double marketCapValue;
