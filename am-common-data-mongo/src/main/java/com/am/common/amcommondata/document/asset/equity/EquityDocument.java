@@ -1,8 +1,8 @@
-package com.am.common.amcommondata.model.asset.equity;
+package com.am.common.amcommondata.document.asset.equity;
 
-import com.am.common.amcommondata.model.asset.AssetModel;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.am.common.amcommondata.document.asset.AssetDocument;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +13,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@JsonInclude(Include.NON_NULL)
-public class EquityModel extends AssetModel {
+public class EquityDocument extends AssetDocument {
     private String isin;
+    @Field("equity_symbol")
+    private String symbol;
     private String companyName;
     private String sector;
     private String industry;
@@ -26,6 +27,6 @@ public class EquityModel extends AssetModel {
     private Double dividendYield;
     private Double eps;
     private Integer sharesOutstanding;
-    private String stockType; // Common, Preferred
+    private String stockType;
     private String countryOfIncorporation;
 }

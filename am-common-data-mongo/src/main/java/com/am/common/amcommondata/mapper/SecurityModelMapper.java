@@ -25,7 +25,7 @@ public class SecurityModelMapper {
         }
 
         SecurityModel model = SecurityModel.builder()
-                .status(document.getStatus())
+                //.status(document.getStatus())
                 .audit(toAuditModel(document.getAudit()))
                 .key(toKeyModel(document.getKey()))
                 .metadata(toMetadataModel(document.getMetadata()))
@@ -43,7 +43,7 @@ public class SecurityModelMapper {
         }
 
         SecurityDocument document = SecurityDocument.builder()
-                .status(model.getStatus())
+                //.status(model.getStatus())
                 .audit(toAuditMetadata(model.getAudit()))
                 .key(toKeyInfo(model.getKey()))
                 .metadata(toSecurityMetadata(model.getMetadata()))

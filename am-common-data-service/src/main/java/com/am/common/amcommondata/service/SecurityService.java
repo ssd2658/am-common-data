@@ -37,17 +37,20 @@ public class SecurityService {
     }
 
     public Optional<SecurityModel> findBySymbol(String symbol) {
-        return securityRepository.findBySymbol(symbol)
+        return securityRepository.findBySymbol(symbol).stream()
+                .findFirst()
                 .map(securityMapper::toModel);
     }
 
     public Optional<SecurityModel> findByKey(String key) {
-        return securityRepository.findByKey(key)
+        return securityRepository.findByKey(key).stream()
+                .findFirst()
                 .map(securityMapper::toModel);
     }
 
     public Optional<SecurityModel> findByIsin(String isin) {
-        return securityRepository.findByIsin(isin)
+        return securityRepository.findByIsin(isin).stream()
+                .findFirst()
                 .map(securityMapper::toModel);
     }
 

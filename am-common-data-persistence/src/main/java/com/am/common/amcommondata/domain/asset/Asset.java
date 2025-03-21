@@ -62,6 +62,7 @@ public class Asset {
     private String exchange;
     private String sector;
     private String industry;
+    private String marketType;
     private String currency;
     private String country;
     private String tags;

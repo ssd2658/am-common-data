@@ -1,7 +1,6 @@
 package com.am.common.amcommondata.repository.security;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -13,13 +12,13 @@ import com.am.common.amcommondata.repository.base.BaseRepository;
 public interface SecurityRepository extends BaseRepository<SecurityDocument> {
     
     @Query(value = "{'key.symbol': ?0}", sort = "{'audit.createdAt': -1}")
-    Optional<SecurityDocument> findBySymbol(String symbol);
+    List<SecurityDocument> findBySymbol(String symbol);
     
     @Query(value = "{'key.isin': ?0}", sort = "{'audit.createdAt': -1}")
-    Optional<SecurityDocument> findByIsin(String isin);
+    List<SecurityDocument> findByIsin(String isin);
     
     @Query(value = "{$or: [{'key.isin': ?0}, {'key.symbol': ?0}]}", sort = "{'audit.createdAt': -1}")
-    Optional<SecurityDocument> findByKey(String key);
+    List<SecurityDocument> findByKey(String key);
     
     @Query(value = "{'metadata.sector': ?0}", sort = "{'audit.createdAt': -1}")
     List<SecurityDocument> findBySector(String sector);

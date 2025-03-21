@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import com.am.common.amcommondata.document.common.AuditMetadata;
+import com.am.common.amcommondata.model.enums.DocumentStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,13 +20,15 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseDocument {
     
     @Id
+    @Field("_id")
     private String id;
     
-    @Field("status")
-    private String status;
+    @Field("baseStatus")
+    private DocumentStatus status;
     
     @Field("audit")
     private AuditMetadata audit;
     
-    private UUID parentId; // Reference to parent document if any
+    @Field("parentId")
+    private String parentId; // Reference to parent document if any, stored as String in MongoDB
 }
