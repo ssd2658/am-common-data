@@ -6,6 +6,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  data:
+    mongodb:
+      uuid-representation: standard
   test:
     database:
       replace: none

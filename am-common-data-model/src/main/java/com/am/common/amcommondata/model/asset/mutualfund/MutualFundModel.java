@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
 public class MutualFundModel extends AssetModel {
+    private String isin;
     private String fundHouse;
     private String category; // Equity, Debt, Hybrid, etc.
     private String subCategory;

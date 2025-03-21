@@ -1,11 +1,13 @@
 package com.am.common.amcommondata.service;
 
-import com.am.common.amcommondata.domain.portfolio.Portfolio;
+import com.am.common.amcommondata.document.portfolio.PortfolioDocument;
 import com.am.common.amcommondata.mapper.PortfolioMapper;
-import com.am.common.amcommondata.model.PortfolioModel;
-import com.am.common.amcommondata.repository.portfolio.PortfolioRepository;
+import com.am.common.amcommondata.model.PortfolioModelV1;
+import com.am.common.amcommondata.repository.portfolio.PortfolioDocumentRepository;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -16,48 +18,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class PortfolioServiceImpl implements PortfolioService {
-    private final PortfolioRepository portfolioRepository;
+    private final PortfolioDocumentRepository portfolioDocumentRepository;
     private final PortfolioMapper portfolioMapper;
+    private final MongoTemplate mongoTemplate;
 
     @Override
-    public List<PortfolioModel> getPortfoliosByUserId(String userId) {
-        return portfolioRepository.findByOwner(userId).stream()
+    public List<PortfolioModelV1> getPortfoliosByUserId(String userId) {
+        return portfolioDocumentRepository.findByOwner(userId).stream()
                 .map(portfolioMapper::toModel)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public PortfolioModel getPortfolioById(UUID id) {
-        return portfolioMapper.toModel(portfolioRepository.findById(id).orElseThrow());
+    public PortfolioModelV1 getPortfolioById(UUID id) {
+        return portfolioDocumentRepository.findById(id.toString())
+        .map(portfolioMapper::toModel)
+        .orElse(null);
     }
 
     @Transactional
-    public PortfolioModel createPortfolio(PortfolioModel portfolioModel) {
-        Portfolio portfolio = portfolioMapper.toEntity(portfolioModel);
-        
-        // Set up bidirectional relationships for assets
-        if (portfolio.getAssets() != null) {
-            portfolio.getAssets().forEach(asset -> asset.setPortfolio(portfolio));
-        }
-        
-        // Save portfolio with assets - CascadeType.ALL will handle asset persistence
-        var savedPortfolio = portfolioRepository.save(portfolio);
-        return portfolioMapper.toModel(savedPortfolio);
+    public PortfolioModelV1 createPortfolio(PortfolioModelV1 portfolioModel) {
+        PortfolioDocument document = portfolioMapper.toDocument(portfolioModel);
+        return portfolioMapper.toModel(mongoTemplate.save(document));
     }
-
-    @Transactional
-    public PortfolioModel updatePortfolio(UUID id, PortfolioModel portfolioModel) {
-        Portfolio existingPortfolio = portfolioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Portfolio not found: " + id));
-        
-        Portfolio updatedPortfolio = portfolioMapper.updateEntity(existingPortfolio, portfolioModel);
-        updatedPortfolio = portfolioRepository.save(updatedPortfolio);
-        return portfolioMapper.toModel(updatedPortfolio);
-    }
-
-    @Transactional
-    public void deletePortfolio(UUID id) {
-        portfolioRepository.deleteById(id);
-    }
-
 }

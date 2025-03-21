@@ -13,7 +13,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
     @ComponentScan("com.portfolio")
 })
 @EnableJpaRepositories(basePackages = {
-    "com.am.common.amcommondata.repository.asset"
+    "com.am.common.amcommondata.repository.asset",
+    "com.am.common.amcommondata.repository.security"
 })
 @EntityScan(basePackages = {
     "com.am.common.amcommondata.domain",
